@@ -113,11 +113,6 @@
       <string>소재지</string>
      </property>
     </column>
-    <column>
-     <property name="text">
-      <string>지정일</string>
-     </property>
-    </column>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
