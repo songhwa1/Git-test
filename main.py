@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from reserve import Reserve
+from login import Login
 
 form_class = uic.loadUiType("Cultural Heritage_main.ui")[0]
 
@@ -13,13 +14,19 @@ class WindowClass(QMainWindow, form_class) :
         self.Gwangyang.clicked.connect(self.gwangyang_list)
         self.Haenam.clicked.connect(self.haenam)
         self.Sunchang.clicked.connect(self.haenam)
+        self.tableWidget.doubleClicked.connect(self.reserve)
+        self.login.clicked.connect(self.login_p)
+
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tableWidget.doubleClicked.connect(self.reserve)
         self.column = 5
 
     def reserve(self):
         second = Reserve()
+        second.exec_()
+
+    def login_p(self):
+        second = Login()
         second.exec_()
 
     def gwangyang_list(self):
