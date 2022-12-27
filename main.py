@@ -2,6 +2,7 @@ import csv
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
+from reserve import Reserve
 
 form_class = uic.loadUiType("Cultural Heritage_main.ui")[0]
 
@@ -13,8 +14,13 @@ class WindowClass(QMainWindow, form_class) :
         self.Haenam.clicked.connect(self.haenam)
         self.Sunchang.clicked.connect(self.haenam)
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        # self.tableWidget.doubleClicked.connect()
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tableWidget.doubleClicked.connect(self.reserve)
         self.column = 5
+
+    def reserve(self):
+        second = Reserve()
+        second.exec_()
 
     def gwangyang_list(self):
         # 이름 4,지정 1,분류 2,번호 3,소재지 6,

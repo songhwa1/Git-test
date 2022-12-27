@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -208,7 +211,7 @@
     <string>0</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_1">
+  <widget class="QPushButton" name="reserve_pb">
    <property name="geometry">
     <rect>
      <x>680</x>
@@ -221,7 +224,7 @@
     <string>예약</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="cancel_pb">
    <property name="geometry">
     <rect>
      <x>680</x>
@@ -234,7 +237,7 @@
     <string>예약취소</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="home_pb">
    <property name="geometry">
     <rect>
      <x>680</x>
