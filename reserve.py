@@ -31,6 +31,11 @@ class Reserve(QDialog, form_class) :
         # self.address_set(address)
         # self.id_set(id)
         #---------------------------------
+        self.hide_date()
+
+    def hide_date(self):
+        self.maxday = self.today.addDays(100)
+        self.calendarWidget.setDateRange(self.today.addDays(1), self.maxday)
 
     def select_date(self):
         self.date = self.calendarWidget.selectedDate()
@@ -76,7 +81,7 @@ class Reserve(QDialog, form_class) :
         return res
 
     def reservation(self):
-        if self.date > self.today and self.date.dayOfWeek() < 6:
+        if self.date.dayOfWeek() < 6:
             count = self.count_spinBox.text()
             res_time = ''
             res = 0
@@ -100,7 +105,7 @@ class Reserve(QDialog, form_class) :
                 QMessageBox.about(self, '안내창', '정원 초과 입니다. 인원 또는 시간을 변경 하세요.')
 
         else:
-            QMessageBox.about(self, '안내창', '날짜를 잘못 선택 했습니다. 예약 날짜를 변경 하세요.')
+            QMessageBox.about(self, '안내창', '주말입니다. 예약 날짜를 변경 하세요.')
 
     def cancel(self):
         cancel_count = 0
