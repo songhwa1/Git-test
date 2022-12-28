@@ -2,13 +2,14 @@ import csv
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
+from cancel import cancelclass
 
 form_class = uic.loadUiType("CulturalHeritage.ui")[0]
 
 #------------연결시 주석처리
-name = 'aaa'
-address = 'bbb'
-id = 'ccc'
+# name = 'aaa'
+# address = 'bbb'
+# id = 'ccc'
 # id = 'ddd'
 #------------------------
 class Reserve(QDialog, form_class) :
@@ -18,7 +19,7 @@ class Reserve(QDialog, form_class) :
 
         self.calendarWidget.clicked.connect(self.select_date)
         self.reserve_pb.clicked.connect(self.reservation)
-        self.cancel_pb.clicked.connect(self.cancel)
+        self.cancel_pb.clicked.connect(self.cancel_page)
         self.home_pb.clicked.connect(self.gohome)
 
         self.date = self.calendarWidget.selectedDate()
@@ -26,9 +27,9 @@ class Reserve(QDialog, form_class) :
         self.res_date = str(self.date.year()) + '/' + str(self.date.month()) + '/' + str(self.date.day())
         self.time1.setChecked(True)
         #--------------------연결시 주석처리
-        self.name_set(name)
-        self.address_set(address)
-        self.id_set(id)
+        # self.name_set(name)
+        # self.address_set(address)
+        # self.id_set(id)
         #---------------------------------
 
     def select_date(self):
@@ -49,7 +50,7 @@ class Reserve(QDialog, form_class) :
         with open('reservation_list.csv', 'r') as f:
             res_list = csv.reader(f)
             for i in res_list:
-                if self.res_date in i:
+                if self.res_date in i and self.name in i and self.address in i:
                     if self.time1.text() in i:
                         res += int(i[4])
         return res
@@ -59,7 +60,7 @@ class Reserve(QDialog, form_class) :
         with open('reservation_list.csv', 'r') as f:
             res_list = csv.reader(f)
             for i in res_list:
-                if self.res_date in i:
+                if self.res_date in i and self.name in i and self.address in i:
                     if self.time2.text() in i:
                         res += int(i[4])
         return res
@@ -69,7 +70,7 @@ class Reserve(QDialog, form_class) :
         with open('reservation_list.csv', 'r') as f:
             res_list = csv.reader(f)
             for i in res_list:
-                if self.res_date in i:
+                if self.res_date in i and self.name in i and self.address in i:
                     if self.time3.text() in i:
                         res += int(i[4])
         return res
@@ -91,7 +92,7 @@ class Reserve(QDialog, form_class) :
 
             if res+int(count) <= 30:
                 word = self.name + ',' + self.address + ',' + self.res_date + ',' + res_time + ',' + count + ',' + self.id + '\n'
-                with open('reservation_list.csv', 'a') as f:
+                with open('reservation_list.csv', 'a', newline='') as f:
                     f.write(word)
                 self.set_reserve()
                 QMessageBox.about(self, '안내창', '예약이 완료 되었습니다.')
@@ -112,8 +113,7 @@ class Reserve(QDialog, form_class) :
                     reservation.append(i)
                 if self.id in i:
                     cancel_count = 1
-        print(reservation)
-        with open('reservation_list.csv', 'w') as f:
+        with open('reservation_list.csv', 'w', newline='') as f:
             writer = csv.writer(f)
             if reservation:
                 for i in reservation:
@@ -123,8 +123,14 @@ class Reserve(QDialog, form_class) :
             QMessageBox.about(self, '안내창', '예약이 취소 되었습니다.')
         else:
             QMessageBox.about(self, '안내창', '예약 이력이 없습니다.')
+
+    def cancel_page(self):
+        self.can = cancelclass(self.id)
+        # self.can.set_id(self.id)
+        self.can.exec_()
+
     def gohome(self):
-        QMessageBox.about(self, '안내창', '메인창으로')
+        # QMessageBox.about(self, '안내창', '메인창으로')
         self.close()
 
     def name_set(self, name):

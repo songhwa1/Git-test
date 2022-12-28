@@ -53,7 +53,7 @@ class Login(QDialog, form_class):
     def Double_Check(self):         # 회원가입 페이지-중복 확인하는 함수
         user = self.id_lineEdit.text()  # id_lineEdit에 입력되는 텍스트
         dc = 0  # 임의로 지정한 변수
-        lines = open('Userinfo.txt', 'r').read().split('\n')      # txt 파일에 저장된 정보를 \n로 구분된 리스트로 만듦
+        lines = open('Userinfo.txt', 'r', encoding='cp949').read().split('\n')      # txt 파일에 저장된 정보를 \n로 구분된 리스트로 만듦
         for i in range(len(lines)):
             data = lines[i].split('\n')         # lisnes[i] 값을 ','로 구분된 리스트로 만듦
             # data가 lines의 요소라서(Userinfo.txt의 한 줄) 정보를 다 읽은 후에 알림을 띄우려면 변수로 리턴값을 주고 조건문으로 알림창이 나오게 해야됨
@@ -123,14 +123,13 @@ class Login(QDialog, form_class):
 
     # 로그인
     def Login_Check (self):
-
         if self.login_id_lineEdit.text() == "":
             QMessageBox.critical(self, "로그인 오류", "정보를 입력하세요")
             return
         self.id = self.login_id_lineEdit.text()
         pw = self.login_pw_lineEdit.text()
         logined = 0
-        lines = open('Userinfo.txt', 'r').read().split('\n')        # txt 파일에 저장된 정보를 \n로 구분된 리스트로 만듦
+        lines = open('Userinfo.txt', 'r', encoding='cp949').read().split('\n')        # txt 파일에 저장된 정보를 \n로 구분된 리스트로 만듦
         for i in range(len(lines)):
             list = lines[i].split(',')          # lisnes[i] 값을 ','로 구분된 리스트로 만듦
             if self.id not in list[0]:       # list[0] = id
@@ -149,20 +148,21 @@ class Login(QDialog, form_class):
         elif pw == '':
             QMessageBox.critical(self, "로그인 오류", "비밀번호를 입력하세요")
         else:
-            return True    # 로그인 성공
+            QMessageBox.critical(self, "안내창", "로그인 성공")
+            # return True    # 로그인 성공
 
 
 
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#
-#     widget = QtWidgets.QStackedWidget()
-#
-#     mainWindow = Login()
-#
-#     widget.addWidget(mainWindow)
-#
-#     widget.setFixedHeight(768)
-#     widget.setFixedWidth(1024)
-#     widget.show()
-#     app.exec_()
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+
+    widget = QtWidgets.QStackedWidget()
+
+    mainWindow = Login()
+
+    widget.addWidget(mainWindow)
+
+    widget.setFixedHeight(768)
+    widget.setFixedWidth(1024)
+    widget.show()
+    app.exec_()
