@@ -1,23 +1,25 @@
 import csv
 import sys
 from PyQt5.QtWidgets import *
-from PyQt5 import uic
+from PyQt5 import uic, QtWidgets
 from PyQt5 import Qt
+from SH_reserve111 import Sub_Window
+from login import Login
 
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
 form_class = uic.loadUiType("Cultural Heritage_main.ui")[0]
 
-
-#화면을 띄우는데 사용되는 Class 선언
-
 class WindowClass(QMainWindow, form_class) :
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
+        self.login.clicked.connect(self.GO_login)
+
         self.Sunchang.clicked.connect(self.Search_Sunchang)
         self.Gwangyang.clicked.connect(self.Search_Gwangyang)
         self.Haenam.clicked.connect(self.Search_Haenam)
+        self.tableWidget.cellDoubleClicked.connect(self.Go_Reserve)
         # tableWidget 수정 불가
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         # tableWidget 열 넓이 조절
@@ -27,6 +29,15 @@ class WindowClass(QMainWindow, form_class) :
         self.tableWidget.setColumnWidth(3, 121)
         self.tableWidget.setColumnWidth(4, 224)
 
+
+
+    def GO_login(self):
+        self.login_page = Login()
+        self.login_page.exec()
+
+    def Go_Reserve(self):
+        self.sub = Sub_Window()
+        self.sub.exec()
 
     def Search_Sunchang(self):
         read_list = []
@@ -40,7 +51,6 @@ class WindowClass(QMainWindow, form_class) :
 
         row = 0
         for i in read_list:
-            print(i)
             self.tableWidget.setItem(row, 0, QTableWidgetItem(i[2]))    #이름
             self.tableWidget.setItem(row, 1, QTableWidgetItem(i[0]))    #지정/구분(ex.국가/도)
             self.tableWidget.setItem(row, 2, QTableWidgetItem(i[1]))    #분류(ex.보물/무형)
@@ -93,11 +103,21 @@ if __name__ == "__main__" :
     #QApplication : 프로그램을 실행시켜주는 클래스
     app = QApplication(sys.argv)
 
+    widget = QtWidgets.QStackedWidget()
+
     #WindowClass의 인스턴스 생성
-    myWindow = WindowClass()
+    mainWindow = WindowClass()
+    subwindow = Sub_Window()
+    loginwindow = Login()
+
+    # stackedwidget에 객체 페이지를 넣어줌.
+    widget.addWidget(mainWindow)
+    widget.addWidget(subwindow)
+    widget.addWidget(loginwindow)
 
     #프로그램 화면을 보여주는 코드
-    myWindow.show()
-
+    widget.show()
+    widget.setFixedHeight(768)
+    widget.setFixedWidth(1024)
     #프로그램을 이벤트루프로 진입시키는(프로그램을 작동시키는) 코드
     app.exec_()
