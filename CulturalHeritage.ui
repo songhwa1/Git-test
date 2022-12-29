@@ -25,6 +25,18 @@
      <height>371</height>
     </rect>
    </property>
+   <property name="firstDayOfWeek">
+    <enum>Qt::Sunday</enum>
+   </property>
+   <property name="gridVisible">
+    <bool>false</bool>
+   </property>
+   <property name="horizontalHeaderFormat">
+    <enum>QCalendarWidget::ShortDayNames</enum>
+   </property>
+   <property name="verticalHeaderFormat">
+    <enum>QCalendarWidget::NoVerticalHeader</enum>
+   </property>
   </widget>
   <widget class="QRadioButton" name="time1">
    <property name="geometry">
